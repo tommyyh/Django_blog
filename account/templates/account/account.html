@@ -13,5 +13,9 @@
     <li>Email: {{ account.email }}</li>
     <li>Username: {{ account.username }}</li>
   </ul>
+  <form action="/account/" method="POST">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+  </form>
 </body>
 </html>

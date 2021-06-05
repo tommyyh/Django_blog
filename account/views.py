@@ -54,6 +54,8 @@ def login(request):
           'id': account.id 
         }
         encoded_jwt = jwt.encode(payload, config('JWT_SECRET'), algorithm='HS256')
+
+        # Save the token to cookies
         response = redirect('blog-home')
         response.set_cookie('token', encoded_jwt, max_age=None)
 
@@ -70,4 +72,14 @@ def login(request):
 
 @decorator_from_middleware(Authenticate)
 def account(request):
+  if request.method == 'POST':
+    # Remove the token from the cookies
+    response = redirect('blog-home')
+    response.delete_cookie('token')
+
+    # Remove user from the session
+    del request.session['user']
+
+    return response
+
   return render(request, 'account/account.html', { 'account': request.session['user'] })
