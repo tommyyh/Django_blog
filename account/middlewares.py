@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 import jwt
 from decouple import config
+from django.contrib import messages
 
 class Authenticate():
   def __init__(self, get_response):
@@ -24,6 +25,10 @@ class Authenticate():
         
         return
       except:
+        messages.success(request, 'You have to be logged to access this page')
+
         return redirect('blog-home')
     else:
+      messages.success(request, 'You have to be logged to access this page')
+
       return redirect('blog-home')

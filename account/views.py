@@ -7,6 +7,7 @@ import jwt
 from decouple import config
 from django.utils.decorators import decorator_from_middleware
 from .middlewares import Authenticate
+from blog.models import Post
 
 # Views
 def register(request):
@@ -59,6 +60,9 @@ def login(request):
         response = redirect('blog-home')
         response.set_cookie('token', encoded_jwt, max_age=None)
 
+        # Save to session
+        request.session['user'] = payload
+
         messages.success(request, 'Successfully logged in')
         
         return response
@@ -82,4 +86,9 @@ def account(request):
 
     return response
 
-  return render(request, 'account/account.html', { 'account': request.session['user'] })
+  posts = Post.objects.filter(author__id = request.session['user'].get('id'))
+
+  return render(request, 'account/account.html', {
+    'account': request.session['user'],
+    'posts': posts
+  })

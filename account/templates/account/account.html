@@ -17,5 +17,11 @@
     {% csrf_token %}
     <button type="submit">Logout</button>
   </form>
+  <h2>My Posts</h2>
+  {% for post in posts %}
+    <h3>{{ post.headline }}</h3>
+    <p>{{ post.content }}</p>
+    <h5>{{ account.username }}</h5>
+  {% endfor %}
 </body>
 </html>
