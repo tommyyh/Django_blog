@@ -5,6 +5,8 @@ from django.contrib import messages
 import bcrypt
 import jwt
 from decouple import config
+from django.utils.decorators import decorator_from_middleware
+from .middlewares import Authenticate
 
 # Views
 def register(request):
@@ -46,7 +48,11 @@ def login(request):
 
       # Check if passwords match
       if bcrypt.checkpw(password, bytes(account.password, encoding='utf-8')):
-        payload = { 'email': account.email, 'username': account.username }
+        payload = {
+          'email': account.email,
+          'username': account.username, 
+          'id': account.id 
+        }
         encoded_jwt = jwt.encode(payload, config('JWT_SECRET'), algorithm='HS256')
         response = redirect('blog-home')
         response.set_cookie('token', encoded_jwt, max_age=None)
@@ -61,3 +67,7 @@ def login(request):
 
 
   return render(request, 'account/login.html', { 'forms': Login })
+
+@decorator_from_middleware(Authenticate)
+def account(request):
+  return render(request, 'account/account.html', { 'account': request.session['user'] })
