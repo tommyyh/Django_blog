@@ -16,3 +16,15 @@ class Register(forms.Form):
     max_length=150,
     widget = forms.PasswordInput(attrs={ 'placeholder': 'Password' })
   )
+
+class Login(forms.Form):
+  email = forms.CharField(
+    label='',
+    max_length=150,
+    widget = forms.EmailInput(attrs={ 'placeholder': 'Email Address' })
+  )
+  password = forms.CharField(
+    label='',
+    max_length=150,
+    widget = forms.PasswordInput(attrs={ 'placeholder': 'Password' })
+  )

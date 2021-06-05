@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Django Blog</title>
+  <title>Django blog - login</title>
 </head>
 <body>
-  <h1>Blog</h1>
+  <h1>Login</h1>
   {% if messages %}
     {% for message in messages %}
       <h4>{{ message }}</h4>
     {% endfor %}
   {% endif %}
-  <nav>
-    <ul>
-      <li><a href="/account/register">Register</a></li>
-      <li><a href="/account/login">Login</a></li>
-    </ul>
-  </nav>
+  <form action="/account/login/" method="POST">
+    {% csrf_token %}
+    {{ forms.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <a href="/account/register">Register</a>
 </body>
 </html>
