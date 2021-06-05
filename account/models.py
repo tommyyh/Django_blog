@@ -33,8 +33,8 @@ class AccountManager(BaseUserManager):
     return user
 
 class Account(AbstractBaseUser):
-  email = models.EmailField(max_length=60, unique=True, verbose_name='email')
-  username = models.CharField(max_length=100)
+  email = models.EmailField(max_length=200, unique=True, verbose_name='email')
+  username = models.CharField(max_length=200)
   date_joined = models.DateTimeField(auto_now_add=True, verbose_name='date joined')
   last_login = models.DateTimeField(auto_now=True, verbose_name='last login')
   is_admin = models.BooleanField(default=False)
