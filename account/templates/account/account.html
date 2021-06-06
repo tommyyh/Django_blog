@@ -13,8 +13,10 @@
     <li>Email: {{ account.email }}</li>
     <li>Username: {{ account.username }}</li>
   </ul>
+  {% load method_override %}
   <form action="/account/" method="POST">
     {% csrf_token %}
+    {% method_override 'DELETE' %}
     <button type="submit">Logout</button>
   </form>
   <h2>My Posts</h2>

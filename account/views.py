@@ -76,7 +76,7 @@ def login(request):
 
 @decorator_from_middleware(Authenticate)
 def account(request):
-  if request.method == 'POST':
+  if request.method == 'DELETE':
     # Remove the token from the cookies
     response = redirect('blog-home')
     response.delete_cookie('token')
