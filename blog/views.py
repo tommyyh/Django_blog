@@ -9,8 +9,20 @@ from account.models import Account
 
 # Views
 def home(request):
+  if request.method == 'DELETE':
+    post_id = request.DELETE.get('id')
+    user_id = request.session['user'].get('id')
+    post = Post.objects.filter(id = post_id)
+
+    # Check if post belongs to the user
+    if post[0].author_id == user_id:
+      # Delete post if true
+      post.delete()
+
+      return redirect('blog-home')
+
   posts = Post.objects.all()
-  user_id = request.session['user'].get('id')
+  user_id = request.session['user'].get('id') if 'user' in request.session else None # Check if user is logged
 
   return render(request, 'blog/home.html', { 'posts': posts, 'user_id': user_id })
 

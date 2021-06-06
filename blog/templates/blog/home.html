@@ -31,6 +31,13 @@
         <h5 style="font-weight: 100;">{{ post.author }}</h5>
         {% if user_id == post.author_id %}
           <a href="/edit-post/{{ post.id }}">Edit Post</a>
+          {% load method_override %}
+          <form action="/" method="POST">
+            {% csrf_token %}
+            {% method_override 'DELETE' %}
+            <input type="hidden" name="id" value="{{ post.id }}">
+            <button type="submit">Delete</button>
+          </form>
         {% endif %}
       {% endfor %}
     </div>
