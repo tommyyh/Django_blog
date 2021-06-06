@@ -6,3 +6,5 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('account/', include('account.urls'))
 ]
+
+handler404 = 'blog.views.not_found'

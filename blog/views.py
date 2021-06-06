@@ -66,5 +66,5 @@ def edit_post(request, id):
 
   return render(request, 'blog/edit.html', { 'form': form, 'post_id': post.id })
 
-def not_found(request):
+def not_found(request, exception=None):
   return render(request, 'blog/404.html')
